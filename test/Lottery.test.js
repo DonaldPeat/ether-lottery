@@ -73,7 +73,7 @@ describe('Lottery Contract', () => {
     }
   });
 
-  it('sends money to winner and resets player array', async () => {
+  it('sends all ether in lottery pool to winner, resets player array', async () => {
     await lottery.methods.enter().send({
       from: accounts[0],
       value: web3.utils.toWei('3', 'ether') //enough to notice change in account balance
@@ -86,9 +86,12 @@ describe('Lottery Contract', () => {
     const players = await lottery.methods.getPlayers().call({
       from: accounts[0]
     });
+    const lotteryBalance = await web3.eth.getBalance(lottery.options.address);
+
 
     assert(difference > web3.utils.toWei('2.8', 'ether')); //account for gas spent
     assert.equal(players.length, 0);
+    assert(lotteryBalance == 0);
 
   })
 })
