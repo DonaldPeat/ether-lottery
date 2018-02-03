@@ -54,7 +54,7 @@ describe('Lottery Contract', () => {
     try{
       await lottery.methods.enter().send({
         from: accounts[0],
-        value: 200 //arbitrary wei amount under the required amount
+        value: 200 //arbitrary wei amount under the required amount to trigger error
       })
       assert(false);
     } catch (err) {
