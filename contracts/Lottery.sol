@@ -4,6 +4,7 @@ contract Lottery {
 
     address public manager;
     address[] public players;
+    address public winner;
 
     function Lottery() public {
         //assign manager contract sender's address
@@ -24,6 +25,7 @@ contract Lottery {
     function pickWinner() public restricted {
         uint index = random() % players.length;
         players[index].transfer(this.balance);
+        winner = players[index];
         players = new address[](0);
     }
 
@@ -36,5 +38,4 @@ contract Lottery {
         return players;
 
     }
-
 }
